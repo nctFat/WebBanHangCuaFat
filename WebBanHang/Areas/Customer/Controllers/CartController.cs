@@ -42,5 +42,37 @@ namespace WebBanHang.Areas.Customer.Controllers
             }else
                 return Json(new { msg = "Error" });
         }
+        public IActionResult Remove(int productId)
+        {
+            var product = _db.Products.FirstOrDefault(x => x.Id == productId);
+            if (product != null)
+            {
+                //Lấy cart từ session
+                Cart cart = HttpContext.Session.GetJson<Cart>("cart");
+                if (cart!= null)
+                {
+                    cart.Remove(productId);//Xoá sản phẩm
+                    HttpContext.Session.SetJson("CART", cart);//lưu cart vào session
+                    return RedirectToAction("Index");
+                }
+            }
+                return NotFound();
+        }
+        public IActionResult Update(int productId, int qty)
+        {
+            var product = _db.Products.FirstOrDefault(x => x.Id == productId);
+            if (product != null)
+            {
+                //Lấy cart từ session
+                Cart cart = HttpContext.Session.GetJson<Cart>("cart");
+                if (cart != null)
+                {
+                    cart.Remove(productId);//Xoá sản phẩm
+                    HttpContext.Session.SetJson("CART", cart);//lưu cart vào session
+                    return RedirectToAction("Index");
+                }
+            }
+            return NotFound();
+        }
     }
 }
