@@ -23,7 +23,7 @@ namespace WebBanHang.Controllers
         public IActionResult Index(int? page)
         {
             var pageIndex = (int)(page != null ? page : 1);
-            var pageSize = 8;
+            var pageSize = 4;
             var productList = _db.Products.ToList();
             var pageSum = productList.Count() / pageSize + (productList.Count() % pageSize > 0 ? 1 : 0);
             ViewBag.PageSum = pageSum;
